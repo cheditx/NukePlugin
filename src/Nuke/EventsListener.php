@@ -17,13 +17,13 @@ class EventsListener implements Listener {
 	
 	public function onPlayerDeath(PlayerDeathEvent $event) {
 	    if ($this->main->nuke) {
-			if ($this->main->getConfig()->get("KeepInventory")) {
-				$event->setKeepInventory(true);
-			}
-			$message = str_replace("{player}", $event->getPlayer()->getName(), $this->main->getConfig()->get("DeathByNukeMessage"));
-		    $event->setDeathMessage($message);
-		} else {
-			$event->setKeepInventory(false);
+	        if ($this->main->getConfig()->get("KeepInventory")) {
+		    $event->setKeepInventory(true);
+		}
+		$message = str_replace("{player}", $event->getPlayer()->getName(), $this->main->getConfig()->get("DeathByNukeMessage"));
+		$event->setDeathMessage($message);
+	    } else {
+	        $event->setKeepInventory(false);
 		}
 	}
 }
