@@ -1,0 +1,6 @@
+#plugin created by cheditx and with the help of GodzHard Telegram = @cheditx, @GodzHard
+
+DeathByNukeMessage: "{player} §cwas killed by the nuke!"
+VictimsMessage: "{victims} §cvictims! "
+CountDownMessage: "§4EXPLOTION §6IN: {time}"
+CountDown: 10
