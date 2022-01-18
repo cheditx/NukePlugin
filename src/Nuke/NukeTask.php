@@ -11,7 +11,6 @@ use pocketmine\network\mcpe\protocol\types\LevelEvent;
 use pocketmine\network\mcpe\protocol\types\LevelSoundEvent;
 use pocketmine\scheduler\CancelTaskException;
 use pocketmine\scheduler\Task;
-use pocketmine\world\sound\ChestCloseSound;
 use pocketmine\world\sound\Sound;
 
 class NukeTask extends task {
