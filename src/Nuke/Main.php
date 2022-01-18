@@ -1,12 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Nuke;
 
 use pocketmine\command\CommandSender;
-use pocketmine\network\mcpe\protocol\LevelEventPacket;
-use pocketmine\network\mcpe\protocol\types\LevelEvent;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;
 
@@ -23,7 +21,7 @@ class Main extends PluginBase{
 		if ($command->getName() == "nuke") {
 			$this->nuke = true;
 			$sender->sendMessage($this->getConfig()->get("NukeActivated"));
-			$this->getScheduler()->scheduleRepeatingTask(new NukeTask($this), 20);
+			$this->getScheduler()->scheduleRepeatingTask(new NukeTask($this, ($sender instanceof Player ? $sender : null)), 20);
 			return false;
 		}
 		return false;

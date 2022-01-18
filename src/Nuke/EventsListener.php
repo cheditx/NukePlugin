@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Nuke;
@@ -16,14 +15,10 @@ class EventsListener implements Listener {
 	}
 	
 	public function onPlayerDeath(PlayerDeathEvent $event) {
+		$event->setKeepInventory(($this->main->nuke and $this->main->getConfig()->get("KeepInventory")));
 	    if ($this->main->nuke) {
-	        if ($this->main->getConfig()->get("KeepInventory")) {
-		    $event->setKeepInventory(true);
-		}
-		$message = str_replace("{player}", $event->getPlayer()->getName(), $this->main->getConfig()->get("DeathByNukeMessage"));
-		$event->setDeathMessage($message);
-	    } else {
-	        $event->setKeepInventory(false);
+			$message = str_replace("{player}", $event->getPlayer()->getName(), $this->main->getConfig()->get("DeathByNukeMessage"));
+		    $event->setDeathMessage($message);
 		}
 	}
 }

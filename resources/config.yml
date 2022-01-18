@@ -4,7 +4,7 @@ NukeActivated: "§f[§4NUKE§f] > §aNuke activated!"
 DeathByNukeMessage: "{player} §cwas killed by the nuke!"
 VictimsMessage: "{victims} §cvictims! "
 CountDownMessage: "§4EXPLOTION §6IN: {time}"
-KeepInventory: true
-ExplotionSound: true
+KeepInventory: false
+ExplosionSound: true
 CountDownSound: true
 CountDown: 10

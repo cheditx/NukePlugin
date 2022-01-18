@@ -1,61 +1,60 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Nuke;
 
-use pocketmine\network\mcpe\protocol\LevelEventPacket;
 use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
-use pocketmine\network\mcpe\protocol\PlaySoundPacket;
-use pocketmine\network\mcpe\protocol\types\LevelEvent;
 use pocketmine\network\mcpe\protocol\types\LevelSoundEvent;
+use pocketmine\player\Player;
 use pocketmine\scheduler\CancelTaskException;
 use pocketmine\scheduler\Task;
-use pocketmine\world\sound\Sound;
 
 class NukeTask extends task {
-	
+
+	const ABBA = 1;
 	private int $time;
 	private Main $main;
-	
-	public function __construct(Main $main) {
+	private int $totalKills = 0;
+	private ?Player $sender = null;
+
+	public function __construct(Main $main, ?Player $sender) {
 		$this->main = $main;
+		if($sender !== null) {
+			$this->sender = $sender;
+		}
 		$this->time = $main->getConfig()->get("CountDown");
 	}
-	
-	public function onRun() : void {
-		$i = array("run");
-		foreach ($i as $ignored) {
-			if ($this->time == 0) {
-				foreach ($this->main->getServer()->getOnlinePlayers() as $players) {
-				  if ($this->main->getServer()->isOp($players->getName())) continue;
-					if ($this->main->getConfig()->get("ExplotionSound")) {
-						$packet = new LevelSoundEventPacket();
-						$packet->sound = LevelSoundEvent::EXPLODE;
-						$packet->extraData = 0;
-						$packet->position = $players->getPosition();
-						$players->getNetworkSession()->sendDataPacket($packet);
-						$players->kill();
-					}
-				}
-				$message1 = str_replace("{victims}", strval(count($this->main->getServer()->getOnlinePlayers())), $this->main->getConfig()->get("VictimsMessage"));
-				$this->main->getServer()->broadcastMessage($message1);
-				$this->main->nuke = false;
-				throw new CancelTaskException();
+
+	public function onRun(): void {
+		if ($this->time == 0) {
+			if ($this->main->getConfig()->get("ExplosionSound")) {
+				self::sendPacket(LevelSoundEvent::EXPLODE, true);
 			}
-			foreach ($this->main->getServer()->getOnlinePlayers() as $players) {
-				if ($this->main->getConfig()->get("CountDownSound")) {
-					$packet = new LevelSoundEventPacket();
-					$packet->sound = LevelSoundEvent::BLOCK_CLICK;
-					$packet->extraData = 0;
-					$packet->position = $players->getPosition();
-					$players->getNetworkSession()->sendDataPacket($packet);
-				}
+			$this->main->getServer()->broadcastMessage(str_replace("{victims}", (string)$this->totalKills, $this->main->getConfig()->get("VictimsMessage")));
+			$this->main->nuke = false;
+			throw new CancelTaskException();
+		}
+		if($this->main->getConfig()->get("CountDownSound")) {
+			self::sendPacket(LevelSoundEvent::BLOCK_CLICK);
+		}
+		$this->main->getServer()->broadcastTitle(str_replace("{time}", strval($this->time), $this->main->getConfig()->get("CountDownMessage")), stay: 10);
+		$this->time--;
+	}
+
+	private function sendPacket(int $sound, bool $kill = false){
+		foreach ($this->main->getServer()->getOnlinePlayers() as $player) {
+			if($kill and $this->main->getServer()->isOp($player->getName())) continue;
+			$packet = new LevelSoundEventPacket();
+			$packet->sound = $sound;
+			$packet->extraData = 0;
+			$packet->position = $player->getPosition();
+			$player->getNetworkSession()->sendDataPacket($packet);
+			if($kill) {
+				if($this->sender !== null and $player->getName() === $this->sender->getName()) continue;
+				$player->kill();
+				$this->totalKills++;
 			}
-			$message2 = str_replace("{time}", strval($this->time), $this->main->getConfig()->get("CountDownMessage"));
-			$this->main->getServer()->broadcastTitle($message2);
-			$this->main->getLogger()->info($message2);
-			$this->time--;
 		}
 	}
+
 }
