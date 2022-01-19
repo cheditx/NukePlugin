@@ -1,5 +1,6 @@
-#plugin created by cheditx and with the help of GodzHardYT, GrosserZak. Telegram = @cheditx, @GodzHard, @zGross
+#plugin created by cheditx and with the help of GodzHard Telegram = @cheditx, @GodzHard
 
+NukeAlreadyActivated: "§f[§4NUKE§f] > §aNuke already activated!"
 NukeActivated: "§f[§4NUKE§f] > §aNuke activated!"
 DeathByNukeMessage: "{player} §cwas killed by the nuke!"
 VictimsMessage: "{victims} §cvictims! "
