@@ -11,7 +11,6 @@ use pocketmine\scheduler\Task;
 
 class NukeTask extends task {
 
-	const ABBA = 1;
 	private int $time;
 	private Main $main;
 	private int $totalKills = 0;

@@ -19,7 +19,7 @@ class Main extends PluginBase{
 
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
 		if ($command->getName() == "nuke") {
-			if ($this->nuke == false) {
+			if (!$this->nuke) {
 				$this->nuke = true;
 				$sender->sendMessage($this->getConfig()->get("NukeActivated"));
 				$this->getScheduler()->scheduleRepeatingTask(new NukeTask($this, ($sender instanceof Player ? $sender : null)), 20);
