@@ -1,11 +1,24 @@
-#plugin created by cheditx and with the help of GodzHard Telegram = @cheditx, @GodzHard
+# plugin created by cheditx and with the help of GodzHard, GrosserZak. Telegram = @cheditx, @GodzHard, @zGross
+
+# CountDown settings
+
+CountDownMessage: "§4EXPLOTION §6IN: {time}"
+CountDown: 10
+
+# Nuke command
 
 NukeAlreadyActivated: "§f[§4NUKE§f] > §aNuke already activated!"
 NukeActivated: "§f[§4NUKE§f] > §aNuke activated!"
+
+# Nuke settings
+
 DeathByNukeMessage: "{player} §cwas killed by the nuke!"
-VictimsMessage: "{victims} §cvictims! "
-CountDownMessage: "§4EXPLOTION §6IN: {time}"
-KeepInventory: false
-ExplosionSound: true
+VictimsMessage: "§f[§4NUKE§f] > {victims} §cvictims!"
+NukeWorld: "world" # set a world only if the GlobalNuke option is false
+
+# Options
+
 CountDownSound: true
-CountDown: 10
+ExplosionSound: true
+KeepInventory: false
+GlobalNuke: true # if this option is set to true, the nuke will be able to kill all players in all worlds

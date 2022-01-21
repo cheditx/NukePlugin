@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Nuke;
 
 use pocketmine\command\CommandSender;
-use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;
+use pocketmine\player\Player;
 
 class Main extends PluginBase{
 	
@@ -15,6 +15,10 @@ class Main extends PluginBase{
 	public function onEnable() : void {
 		$this->saveDefaultConfig();
 		$this->getServer()->getPluginManager()->registerEvents(new EventsListener($this), $this);
+		$worldName = $this->getConfig()->get("NukeWorld");
+		if ($this->getServer()->getWorldManager()->isWorldLoaded($worldName)) {
+			$this->getServer()->getWorldManager()->loadWorld($worldName);
+		}
 	}
 
 	public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
