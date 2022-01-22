@@ -26,6 +26,7 @@ class Main extends PluginBase{
 			if (!$this->nuke) {
 				$this->nuke = true;
 				$sender->sendMessage($this->getConfig()->get("NukeActivated"));
+				$this->getServer()->broadcastMessage("Task started");
 				$this->getScheduler()->scheduleRepeatingTask(new NukeTask($this, ($sender instanceof Player ? $sender : null)), 20);
 				return false;
 			} else {
