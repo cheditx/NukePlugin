@@ -9,4 +9,4 @@ __the plugin has a file called config (which is editable from the plugin_data \ 
 
 # How to use in-game?
 
-__ nuke can be activated using the / nuke command, to use it you must be OP or have the `nuke.command` permission.__
+__nuke can be activated using the / nuke command, to use it you must be OP or have the `nuke.command` permission.__
