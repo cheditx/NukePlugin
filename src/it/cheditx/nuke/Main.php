@@ -16,7 +16,7 @@ class Main extends PluginBase {
 		$this->saveDefaultConfig();
 		$this->getServer()->getPluginManager()->registerEvents(new EventsListener($this), $this);
 		$worldName = $this->getConfig()->get("NukeWorld");
-		if ($this->getServer()->getWorldManager()->isWorldLoaded($worldName)) {
+		if (!$this->getServer()->getWorldManager()->isWorldLoaded($worldName)) {
 			$this->getServer()->getWorldManager()->loadWorld($worldName);
 		}
 	}
